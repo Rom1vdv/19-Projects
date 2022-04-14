@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: romvan-d <romvan-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/07 11:57:31 by romvan-d          #+#    #+#             */
-/*   Updated: 2022/03/18 18:21:00 by romvan-d         ###   ########.fr       */
+/*   Created: 2022/03/17 18:48:59 by romvan-d          #+#    #+#             */
+/*   Updated: 2022/03/18 18:20:54 by romvan-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 size_t	ft_strlen(char *s)
 {
@@ -26,7 +26,7 @@ size_t	ft_strlen(char *s)
 	return (0);
 }
 
-static char	*ft_strdup(char *str)
+char	*ft_strdup(char *str)
 {
 	int		i;
 	char	*copied_str;
@@ -46,7 +46,7 @@ static char	*ft_strdup(char *str)
 	return (copied_str);
 }
 
-static size_t	ft_strlcat(char *dst, char *src, size_t dstsize)
+size_t	ft_strlcat(char *dst, char *src, size_t dstsize)
 {
 	size_t	i;
 	size_t	j;
@@ -69,7 +69,7 @@ static size_t	ft_strlcat(char *dst, char *src, size_t dstsize)
 	return (size_dst + size_src);
 }
 
-static size_t	ft_strlcpy(char *dst, char *src, size_t dstsize)
+size_t	ft_strlcpy(char *dst, char *src, size_t dstsize)
 {
 	size_t	i;
 

@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: romvan-d <romvan-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/14 18:56:51 by romvan-d          #+#    #+#             */
-/*   Updated: 2022/03/18 17:06:33 by romvan-d         ###   ########.fr       */
+/*   Created: 2022/03/17 18:48:38 by romvan-d          #+#    #+#             */
+/*   Updated: 2022/03/18 16:36:28 by romvan-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
-static void	*ft_bzero(void *str, size_t len)
+void	*ft_bzero(void *str, size_t len)
 {
 	int				i;
 	unsigned char	*ptr;
@@ -28,7 +28,7 @@ static void	*ft_bzero(void *str, size_t len)
 	return (str);
 }
 
-static int	ft_strchr(char *str, int c)
+int	ft_strchr(char *str, int c)
 {
 	int	i;
 
@@ -45,7 +45,7 @@ static int	ft_strchr(char *str, int c)
 	return (0);
 }
 
-static char	*ft_handle_pre_endl(char *str, size_t len)
+char	*ft_handle_pre_endl(char *str, size_t len)
 {
 	int		i;
 	char	*stored;
@@ -68,7 +68,7 @@ static char	*ft_handle_pre_endl(char *str, size_t len)
 	return (stored);
 }
 
-static void	ft_handle_post_endl(char *str, char*buff)
+void	ft_handle_post_endl(char *str, char*buff)
 {
 	int	i;
 	int	j;
@@ -90,26 +90,26 @@ static void	ft_handle_post_endl(char *str, char*buff)
 
 char	*get_next_line(int fd)
 {
-	static char	buffer[BUFFER_SIZE + 1];
+	static char	buffer[OPEN_MAX][BUFFER_SIZE + 1];
 	char		*remainder;
 	char		*line;
 	int			i;
 
-	if (fd < 0 || BUFFER_SIZE < 0)
+	if (fd < 0 || BUFFER_SIZE < 0 || fd > OPEN_MAX)
 		return (NULL);
 	i = BUFFER_SIZE;
-	remainder = ft_strjoin(NULL, buffer);
-	while (i == BUFFER_SIZE && ft_strchr(buffer, '\n') == 0)
+	remainder = ft_strjoin(NULL, buffer[fd]);
+	while (i == BUFFER_SIZE && ft_strchr(buffer[fd], '\n') == 0)
 	{
-		ft_bzero(buffer, BUFFER_SIZE + 1);
-		i = read(fd, buffer, BUFFER_SIZE);
-		remainder = ft_strjoin(remainder, buffer);
+		ft_bzero(buffer[fd], BUFFER_SIZE + 1);
+		i = read(fd, buffer[fd], BUFFER_SIZE);
+		remainder = ft_strjoin(remainder, buffer[fd]);
 	}
-	ft_handle_post_endl(remainder, buffer);
+	ft_handle_post_endl(remainder, buffer[fd]);
 	if (!remainder[0] && i != BUFFER_SIZE)
 		line = NULL;
 	else
-		line = ft_handle_pre_endl(remainder, ft_strlen(buffer));
+		line = ft_handle_pre_endl(remainder, ft_strlen(buffer[fd]));
 	free(remainder);
 	return (line);
 }
